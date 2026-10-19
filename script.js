@@ -31,3 +31,21 @@ const observer = new IntersectionObserver((entries) => {
 }, { rootMargin: '-40% 0px -55% 0px' });
 
 sections.forEach(s => observer.observe(s));
+
+// Typing effect for hero name
+const targetText = 'Choirul Anam';
+const typedElement = document.getElementById('typedName');
+let charIdx = 0;
+
+function typeWriter() {
+  if (charIdx < targetText.length) {
+    typedElement.textContent += targetText.charAt(charIdx);
+    charIdx++;
+    setTimeout(typeWriter, 110);
+  }
+}
+
+// Start typing shortly after page load
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(typeWriter, 350);
+});
