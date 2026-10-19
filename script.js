@@ -32,20 +32,28 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(s => observer.observe(s));
 
-// Typing effect for hero name
-const targetText = 'Choirul Anam';
-const typedElement = document.getElementById('typedName');
-let charIdx = 0;
+// Typing animation
+(function () {
+  var text = 'Choirul Anam';
+  var speed = 110;
+  var delay = 400;
+  var idx = 0;
 
-function typeWriter() {
-  if (charIdx < targetText.length) {
-    typedElement.textContent += targetText.charAt(charIdx);
-    charIdx++;
-    setTimeout(typeWriter, 110);
+  function run() {
+    var el = document.getElementById('typedName');
+    if (!el) return; // safety guard
+
+    if (idx < text.length) {
+      el.textContent = text.slice(0, ++idx);
+      setTimeout(run, speed);
+    }
   }
-}
 
-// Start typing shortly after page load
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(typeWriter, 350);
-});
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(run, delay);
+    });
+  } else {
+    setTimeout(run, delay);
+  }
+})();
